@@ -1,5 +1,5 @@
 # IntellJ
-.idea
+/.idea
 # Logs
 logs
 *.log
