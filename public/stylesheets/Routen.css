@@ -27,3 +27,55 @@
     padding-bottom:30px;
 }
 
+
+.modal{
+    left:65%;
+    max-width:40%;
+    width: 30%;
+}
+
+.pheader{
+    padding:10px 15px;
+    display:flex;
+    justify-content:space-between;
+    align-iteams:center:
+    border-bottom: 1px solid black;
+
+}
+.ph{
+    font-size:30px;
+    color:#00BFFF;
+    font-weight:bold;
+    margin-left:3px;
+    font-family:Monospace;
+}
+
+.info{
+    font-size:15px;
+    padding-left:15px;
+}
+.rzeige{
+
+    text-decoration-line:none;
+    font-weight:bold;
+    font-size:15px;
+    color:white;
+    background-color:red;
+    border: 1px solid black;
+}
+.rzeige button:hover{
+    background-color:yellow;
+}
+
+.pheader .close-button{
+    cursor:pointer;
+    border:none;
+    outlien:none;
+    background:none;
+    font-weight:bold;
+    font-size:30px;
+}
+
+
+
+
