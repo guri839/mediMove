@@ -3,6 +3,19 @@
     font-family:Serif, sans-serif, Monospace,Cursive,"Times New Roman",Times;
 }
 
+
+.goback{
+    margin-top:50px;
+    margin-left:40px;
+    font-size:30px;
+    text-decoration-line:none;
+    border:white;
+    width:40%;
+    background-color:red;
+    color: white;
+    hight: 20px;
+}
+
 html, body{
     margin:0;
     padding:0;

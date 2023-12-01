@@ -12,3 +12,7 @@ openModal.addEventListener('click', ()=> {
 closeModal.addEventListener('click', ()=> {
     modal.close();
 })
+
+function gobackfunction(){
+    window.history.back();
+}
