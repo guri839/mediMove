@@ -1,0 +1,45 @@
+CREATE TABLE Fahrgast (
+    FahrgastID INT PRIMARY KEY,
+    Vorname VARCHAR(50),
+    Nachname VARCHAR(50),
+    Telefonnummer VARCHAR(20)
+);
+
+CREATE TABLE Fahrten (
+    FahrtID INT PRIMARY KEY,
+    Startpunkt VARCHAR(100),
+    Zielpunkt VARCHAR(100),
+    FahrgastID INT,
+    Datum DATETIME,
+    FOREIGN KEY (FahrgastID) REFERENCES Fahrgast(FahrgastID)
+);
+
+CREATE TABLE Fahrzeuge (
+    FahrzeugID INT PRIMARY KEY,
+    Marke VARCHAR(50),
+    Kennzeichen VARCHAR(20),
+    Sitzkapazitaet INT,
+    Barrierefrei VARCHAR(20)
+);
+
+CREATE TABLE Fahrer (
+    FahrerID INT PRIMARY KEY,
+    Vorname VARCHAR(50),
+    Nachname VARCHAR(50)
+);
+
+CREATE TABLE Routen (
+    RouteID INT PRIMARY KEY
+);
+
+CREATE TABLE RoutenFahrten (
+    RoutenFahrtenID INT PRIMARY KEY,
+    RouteID INT,
+    FahrtID INT,
+    FahrerID INT,
+    FahrzeugID INT,
+    FOREIGN KEY (RouteID) REFERENCES Routen(RouteID),
+    FOREIGN KEY (FahrtID) REFERENCES Fahrten(FahrtID),
+    FOREIGN KEY (FahrerID) REFERENCES Fahrer(FahrerID),
+    FOREIGN KEY (FahrzeugID) REFERENCES Fahrzeuge(FahrzeugID)
+);
