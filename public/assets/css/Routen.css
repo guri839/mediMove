@@ -43,7 +43,7 @@
     padding:10px 15px;
     display:flex;
     justify-content:space-between;
-    align-iteams:center:
+    align-iteams:center;
     border-bottom: 1px solid black;
 
 }
@@ -52,7 +52,7 @@
     color:#00BFFF;
     font-weight:bold;
     margin-left:3px;
-    font-family:Monospace;
+    font-family: Monospace, serif;
 }
 
 .info{

@@ -1,0 +1,210 @@
+* {
+    box-sizing: border-box;
+    font-family: Serif, sans-serif, Monospace, Cursive, "Times New Roman", Times;
+}
+
+
+.goback {
+    margin-top: 50px;
+    margin-left: 40px;
+    font-size: 30px;
+    text-decoration-line: none;
+    border: white;
+    width: 40%;
+    background-color: red;
+    color: white;
+    hight: 20px;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-size: cover;
+    font-size: 50px;
+    background-color: red;
+    color: white;
+    font-family: "Times New Roman", Times, serif;
+    text-align: center;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    margin-top: 0;
+    font-weight: normal;
+    font-style: italic;
+
+}
+
+.hallo {
+    text-align: center;
+    font-family: Monospace, serif;
+}
+
+.fa-solid fa-envelope {
+    margin-right: 30px;
+}
+
+.n1 {
+    font-family: "Times New Roman", Times, serif;
+    font-style: italic;
+}
+
+.nav {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.leftbox ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav li {
+    display: inline;
+    margin-right: 40px;
+}
+
+.nav a {
+    display: inline-block;
+    font-size: 40px;
+    text-decoration-line: none;
+    color: black;
+}
+
+.navibar li a:hover {
+    color: gold;
+}
+
+.nav li a:hover {
+    backgroundcolor: black;
+    color: green;
+}
+
+
+.navibar {
+    text-align: center;
+}
+
+.navibar li {
+    font-size: 20px;
+    text-decoration-line: none;
+    color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 2px solid white;
+    background-color: #FF0000;
+
+}
+
+.navibar a {
+    color: white;
+    display: block;
+    text-decoration-line: none;
+    padding: 20px 10px 20px 10px;
+    text-align: center;
+
+}
+
+.leftbox {
+    float: left;
+    width: 15%;
+    height: 100%;
+}
+
+.mainbox {
+    float: left;
+    width: 80%;
+    padding-left: 120px;
+}
+
+.bigbox::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+@media screen and (max-width: 1000px) {
+    .leftbox, .mainbox {
+        width: 100%;
+        padding: 0;
+
+    }
+}
+
+.hroute {
+    border: 2px solid white;
+    margin-right: 30px;
+    background-color: #FFFFE0;
+
+}
+
+.hr {
+    margin-left: 10px;
+    padding-left: 30px;
+}
+
+.table {
+    margin-top: 10px;
+    padding-left: 70px;
+    padding-bottom: 10px;
+}
+
+.htable {
+    border-collapse: collapse;
+    width: 60%;
+    text-align: center;
+
+}
+
+.htable tr {
+    text-allign: center;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.htable td {
+    background-color: #E0FFFF;
+}
+
+.datum {
+    height: 40px;
+}
+
+.nroute {
+    margin-top: 40px;
+    border: 2px solid black;
+    height: 400px;
+    margin-right: 30px;
+}
+
+.nr {
+    padding-left: 20px;
+    font-size: 25px;
+}
+
+.map {
+    margin-left: 70px;
+}
+
+.meldung {
+    margin-top: 40px;
+    border: 2px solid white;
+    height: 300px;
+    margin-right: 30px;
+    font-size: 20px;
+    padding-left: 20px;
+    background-color: #FFFFE0;
+}
+
+.news {
+    font-size: 20px;
+
+}
+
+
+
