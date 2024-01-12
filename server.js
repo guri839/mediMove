@@ -1,4 +1,5 @@
 const winston = require('winston');
+const mysql = require('mysql');
 const express = require("express");
 const app = express();
 
@@ -18,12 +19,20 @@ const logger = winston.createLogger({
     ],
 });
 
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'root' ,
+    database: 'medimove',
+})
+
 // Transports logs to the console
 logger.add(new winston.transports.Console({
     format: winston.format.simple(),
 }));
 
 app.use(express.static('public'));
+
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/main.html');
@@ -40,7 +49,7 @@ app.get('/title', function (req, res) {
         message: 'title requested'
     });
 });
-app.get('/routen', function (req, res) {
+app.get('/allRouten', function (req, res) {
     res.sendFile(__dirname + '/public/Routen.html');
     logger.log({
         level: 'info',
@@ -70,6 +79,49 @@ app.get('/plan', function (req, res) {
     });
 });
 
+app.get("/fahrgast", (req, res) => {
+    const sql = 'SELECT * FROM Fahrer';
+    db.query(sql, (err, data) =>{
+        if (err) return res.json("Error");
+        return res.json(data);
+    })
+})
+
+app.get("/fahrer", (req, res) => {
+    const sql = "SELECT * FROM Fahrgast";
+    db.query(sql, (err, data) =>{
+        if (err) return res.json("Error");
+        return res.json(data);
+    })
+})
+
+app.get("/fahrzeuge", (req, res) => {
+    const sql = "SELECT * FROM Fahrzeuge";
+    db.query(sql, (err, data) =>{
+        if (err) return res.json("Error");
+        return res.json(data);
+    })
+})
+
+app.get("/fahrzeug/:fahrzeugId", (req, res) => {
+    const fahrzeugId = Number(req.params.fahrzeugId);
+    console.log(`SELECT * FROM Fahrzeuge where fahrzeugId is '${fahrzeugId}'`);
+    res.json({fahrzeugId});
+    // const sql = `SELECT * FROM Fahrzeuge where fahrzeugId is '${fahrzeugId}'`;
+    // db.query(sql, (err, data) =>{
+    //  if (err) return res.json("Error");
+    //  return res.json(data);
+    // })
+})
+
+
+app.get("/routen", (req, res) => {
+    const sql = "SELECT Routen.RouteID, Fahrten.Startpunkt AS Startort, Fahrten.Zielpunkt AS Zielort,Fahrgast.Vorname AS Vorname,Fahrgast.Nachname AS Nachname,Fahrer.Nachname AS FahrerNachname,Fahrzeuge.Marke AS FahrzeugMarke,Fahrzeuge.Kennzeichen AS FahrzeugKennzeichen FROM Routen JOIN RoutenFahrten ON Routen.RouteID = RoutenFahrten.RouteID JOIN Fahrten ON RoutenFahrten.FahrtID = Fahrten.FahrtID JOIN Fahrgast ON Fahrten.FahrgastID = Fahrgast.FahrgastID JOIN Fahrer ON RoutenFahrten.FahrerID = Fahrer.FahrerID JOIN Fahrzeuge ON RoutenFahrten.FahrzeugID = Fahrzeuge.FahrzeugID";
+    db.query(sql, (err, data) =>{
+        if (err) return res.json("Error Allrouten");
+        return res.json(data);
+    })
+})
 
 app.listen(3000, function () {
     console.log('Server läuft auf Port 3000');

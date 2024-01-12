@@ -5,7 +5,11 @@
     <title>Routen</title>
     <link href="/assets/css/Routen.css" rel="stylesheet"/>
     <link href="/assets/css/main.css" rel="stylesheet"/>
-    <script defer src="/assets/js/main.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+
+    <script src="/assets/js/main.js"></script>
 </head>
 
 <script crossorigin="anonymous"
@@ -24,29 +28,31 @@
     <div class="leftbox">
 
         <ul class="navibar">
-            <li><a href=""><i class="fa-solid fa-compass" style ="font-size:2em;"></i></a></li>
+            <li><a href=""><i class="fa-solid fa-compass" style="font-size:2em;"></i></a></li>
             <li><a href="/title">StartSeite/Dashboard</a></li>
-            <li><a href="/routen" class="allrouten">Alle Routen  <i class="fa-solid fa-route"></i></a></li>
-            <li><a href="/plan" class="allf">Mein Fahrtenplan</a></li>
+            <li><a class="allrouten" href="/allRouten">Alle Routen <i class="fa-solid fa-route"></i></a></li>
+            <li><a class="allf" href="/plan">Mein Fahrtenplan</a></li>
             <li><a href="/history">Fahrtenhistorie</a></li>
             <li><a href="/messages">Mitteilung <i class="fa-solid fa-bell"></i></a></li>
         </ul>
         <div>
-            <button class="goback" onclick="gobackfunction()"><i class="fa-solid fa-arrow-left-long"
+            <button class="goback" onclick="goBackFunction()"><i class="fa-solid fa-arrow-left-long"
                                                                  style="font-size:25px"></i></button>
         </div>
     </div>
     <div class="mainbox">
-        <h1 class="read"><i class="fa-brands fa-readme" style="font-size:25px;"></i> Bitte klicken Sie die
-            Routen-Nummer, um mehr Infomation zu erfahren. </h1>
+        <h1 class="read"><i class="fa-brands fa-readme" style="font-size:25px;"></i> Übersicht aller Routen </h1>
         <div class="atable">
-            <table class="rtable">
+            <table class="rtable" id="routen-tabelle">
                 <tr>
                     <th>Route-Nummer</th>
-                    <th>Datum</th>
-                    <th>Uhrzeit</th>
+                    <th>Startpunkt</th>
+                    <th>Zielort</th>
+                    <th>Name Fahrgast</th>
+                    <th>zugeilter Fahrer</th>
+                    <th>Fahrzeug</th>
                 </tr>
-                <tr>
+                <!--tr>
                     <td>
                         <button class="press">89733</button>
                     </td>
@@ -73,8 +79,7 @@
                     </td>
                     <td>14.01.2024</td>
                     <td>23:00</td>
-                </tr>
-                </tr>
+                </tr>-->
             </table>
 
             <dialog class="modal" id="modal">
@@ -98,6 +103,29 @@
 
         </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $.get("/routen", function (data) {
+                console.log(data);
+
+                for (const row of data) {
+                    console.log("Fahrer:", row["FahrerNachname"]);
+
+                    const tableRow = `<tr>
+                        <td><button class="press">${row["RouteID"]}</button></td>
+                        <td>${row["Startort"]}</td>
+                        <td>${row["Zielort"]}</td>
+                        <td>${row["Nachname"]}</td>
+                        <td>${row["FahrerNachname"]}</td>
+                        <td>${row["FahrzeugMarke"]}</td>
+                    </tr>`;
+                    $('#routen-tabelle').find('tbody').append(tableRow);
+                }
+            });
+        });
+    </script>
+
 </div>
 </body>
 </html>
