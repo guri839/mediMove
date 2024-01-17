@@ -1,132 +1,199 @@
-const winston = require('winston');
-const mysql = require('mysql');
-const express = require("express");
-const app = express();
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Routen</title>
+    <link href="/assets/css/Routen.css" rel="stylesheet" />
+    <link href="/assets/css/main.css" rel="stylesheet" />
+    <script crossorigin="anonymous" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 
-// Creates Logger for Logging into files
-const logger = winston.createLogger({
-    level: 'info',
-    format: winston.format.json(),
-    defaultMeta: {service: 'user-service'},
-    transports: [
-        //
-        // - Write all logs with importance level of `error` or less to `error.log`
-        // - Write all logs with importance level of `info` or less to `combined.log`
-        //
-        new winston.transports.File({filename: 'error.log', level: 'error'}),
-        new winston.transports.File({filename: 'combined.log'}),
-    ],
-});
+    <script src="/assets/js/main.js"></script>
+</head>
 
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root' ,
-    database: 'medimove',
-})
+<script crossorigin="anonymous" src="https://kit.fontawesome.com/790004d9dc.js"></script>
 
-// Transports logs to the console
-logger.add(new winston.transports.Console({
-    format: winston.format.simple(),
-}));
-
-app.use(express.static('public'));
+<H1 class="header">MediMove - Alle Routen</H1>
+<ul class="nav">
+    <li><a class="n1" href="/title" style="color:red;"><i class="fa-solid fa-hand-point-right" style="color:red;"></i>
+            Medimove</a></li>
+    <li><a href="/messages"><i class="fa-solid fa-envelope" style="font-size:1em;"></i></a></li>
+</ul>
 
 
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/public/main.html');
-    logger.log({
-        level: 'info',
-        message: '"/" requested'
-    });
-});
+<body>
 
-app.get('/title', function (req, res) {
-    res.sendFile(__dirname + '/public/main.html');
-    logger.log({
-        level: 'info',
-        message: 'title requested'
-    });
-});
-app.get('/allRouten', function (req, res) {
-    res.sendFile(__dirname + '/public/Routen.html');
-    logger.log({
-        level: 'info',
-        message: 'routes requested'
-    });
-});
-app.get('/history', function (req, res) {
-    res.sendFile(__dirname + '/public/history.html');
-    logger.log({
-        level: 'info',
-        message: 'history requested'
-    });
-});
-app.get('/messages', function (req, res) {
-    res.sendFile(__dirname + '/public/Message.html');
-    logger.log({
-        level: 'info',
-        message: 'messages requested'
-    });
-});
-
-app.get('/plan', function (req, res) {
-    res.sendFile(__dirname + '/public/fahrtenplan.html');
-    logger.log({
-        level: 'info',
-        message: 'plan requested'
-    });
-});
-
-app.get("/fahrgast", (req, res) => {
-    const sql = 'SELECT * FROM Fahrer';
-    db.query(sql, (err, data) =>{
-        if (err) return res.json("Error");
-        return res.json(data);
-    })
-})
-
-app.get("/fahrer", (req, res) => {
-    const sql = "SELECT * FROM Fahrgast";
-    db.query(sql, (err, data) =>{
-        if (err) return res.json("Error");
-        return res.json(data);
-    })
-})
-
-app.get("/fahrzeuge", (req, res) => {
-    const sql = "SELECT * FROM Fahrzeuge";
-    db.query(sql, (err, data) =>{
-        if (err) return res.json("Error");
-        return res.json(data);
-    })
-})
-
-app.get("/fahrzeug/:fahrzeugId", (req, res) => {
-    const fahrzeugId = Number(req.params.fahrzeugId);
-    console.log(`SELECT * FROM Fahrzeuge where fahrzeugId is '${fahrzeugId}'`);
-    res.json({fahrzeugId});
-    // const sql = `SELECT * FROM Fahrzeuge where fahrzeugId is '${fahrzeugId}'`;
-    // db.query(sql, (err, data) =>{
-    //  if (err) return res.json("Error");
-    //  return res.json(data);
-    // })
-})
+    <!-- This is your modal container that is initially hidden with CSS -->
+    <div id="myModal" class="modal">
+        <!-- Modal content container -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <!-- Content will be injected here -->
+            <div id="modalContainer"></div>
+        </div>
+    </div>
 
 
-app.get("/routen", (req, res) => {
-    const sql = "SELECT Routen.RouteID, Fahrten.Startpunkt AS Startort, Fahrten.Zielpunkt AS Zielort,Fahrgast.Vorname AS Vorname,Fahrgast.Nachname AS Nachname,Fahrer.Nachname AS FahrerNachname,Fahrzeuge.Marke AS FahrzeugMarke,Fahrzeuge.Kennzeichen AS FahrzeugKennzeichen FROM Routen JOIN RoutenFahrten ON Routen.RouteID = RoutenFahrten.RouteID JOIN Fahrten ON RoutenFahrten.FahrtID = Fahrten.FahrtID JOIN Fahrgast ON Fahrten.FahrgastID = Fahrgast.FahrgastID JOIN Fahrer ON RoutenFahrten.FahrerID = Fahrer.FahrerID JOIN Fahrzeuge ON RoutenFahrten.FahrzeugID = Fahrzeuge.FahrzeugID";
-    db.query(sql, (err, data) =>{
-        if (err) return res.json("Error Allrouten");
-        return res.json(data);
-    })
-})
+    <div class="bigbox">
+        <div class="leftbox">
 
-app.listen(3000, function () {
-    console.log('Server läuft auf Port 3000');
-    logger.log({
-        level: 'info',
-        message: 'Server online'
-    });
-});
+            <ul class="navibar">
+                <li><a href=""><i class="fa-solid fa-compass" style="font-size:2em;"></i></a></li>
+                <li><a href="/title">StartSeite/Dashboard</a></li>
+                <li><a class="allrouten" href="/allRouten">Alle Routen <i class="fa-solid fa-route"></i></a></li>
+                <li><a class="allf" href="/plan">Mein Fahrtenplan</a></li>
+                <li><a href="/history">Fahrtenhistorie</a></li>
+                <li><a href="/messages">Mitteilung <i class="fa-solid fa-bell"></i></a></li>
+            </ul>
+            <div>
+                <button class="goback" onclick="goBackFunction()"><i class="fa-solid fa-arrow-left-long"
+                        style="font-size:25px"></i></button>
+            </div>
+        </div>
+        <div class="mainbox">
+            <h1 class="read"><i class="fa-brands fa-readme" style="font-size:25px;"></i> Übersicht aller Routen </h1>
+            <div class="atable">
+                <table class="rtable" id="routen-tabelle">
+                    <tr>
+                        <th>Route-Nummer</th>
+                        <th>zugeilter Fahrer</th>
+                        <th>Fahrzeug</th>
+                    </tr>
+                </table>
+
+                <dialog class="modal" id="modal">
+                    <div class="pheader">
+                        <div class="ph">RoutenInfo</div>
+                        <button class="close-button">&times;</button>
+                    </div>
+                    <div class="info">
+                        <h2>Route-Nr: 18867 <br>
+                            Abholungsort:Bölingerstr.70338<br>
+                            Ziel: Leonberg Krankenhaus<br>
+                            Gäste : 5 </h2><br>
+
+                        <a href="/Route-Anzeige.html">
+                            <button class="rzeige"> Route anzeige</button>
+                        </a>
+
+                    </div>
+                </dialog>
+
+
+            </div>
+        </div>
+
+        <script>
+
+            function openModalNeu(routeID) {
+                // const tmp = {
+                //     RouteID: routenId,
+                //     Datum: new Date().toISOString(),
+                //     Guests: [
+                //         {Id: 1, Vorname: "Test", Nachname: "Otto", Start: "Wangen", Ziel: "Valhalla"}
+                //     ]
+                // };
+                // Your logic here using the routeID parameter
+                $.get(`/routen/${routeID}`, function (data) {
+                    const datanew = { Guests: [] , RouteID: routeID , Datum: new Date().toISOString()};
+                    let i = 1;
+                    for (const entry of data) {
+                        datanew.Guests.push({
+                            Id: i,
+                            Vorname: entry.Vorname,
+                            Nachname: entry.Nachname,
+                            Startort: entry.Startort,
+                            Zielort: entry.Zielort
+                        })
+                        i++;
+
+                    }
+                    console.log(datanew);
+                    const modalHtmlContent = generateModal(datanew);
+                    $('#modalContainer').html(modalHtmlContent);
+                    $('#myModal').show();
+                });
+            }
+
+            // Function to close the modal
+            function closeModalNew() {
+                $('#myModal').hide();
+            }
+
+            // Event listener for the close button
+            $('.close').click(function () {
+                closeModalNew();
+            });
+
+            // Call this function when you want to open the modal
+            // openModal();
+
+            // If you want to close the modal when user clicks anywhere outside of the modal
+            $(window).click(function (event) {
+                if ($(event.target).is('#myModal')) {
+                    closeModalNew();
+                }
+            });
+
+            $(document).ready(function () {
+                $.get("/routen", function (data) {
+                    console.log(data);
+
+                    for (const row of data) {
+                        console.log("Fahrer:", row["FahrerNachname"]);
+
+                        // <td><button class="press">${row["RouteID"]}</button></td>
+                        const tableRow = `<tr>
+                        <td><button class="press" onclick="openModalNeu('${row["RouteID"]}')">${row["RouteID"]}</button></td>
+                        <td>${row["FahrerNachname"]}</td>
+                        <td>${row["FahrzeugMarke"]}</td>
+                    </tr>`;
+                        $('#routen-tabelle').find('tbody').append(tableRow);
+                    }
+                })
+             
+            });
+
+            function generateModal(data) {
+                let guestRows = "";
+                for (const guest of data.Guests) {
+                    guestRows = guestRows + `
+                <tr>
+                    <td>${guest.Id}</td>
+                    <td>${guest["Vorname"]} ${guest["Nachname"]}</td>
+                    <td>✓</td>
+                </tr>
+                <tr>
+                    <td>${guest["Startort"]} - ${guest["Zielort"]}</td>
+                </tr>`;
+                }
+
+                return `
+            <div class="modal-content">
+            <h2>RouteInfo</h2>
+            <div class="field">
+                <label>Route:</label>
+                <span>${data["RouteID"]}</span>
+            </div>
+            <div class="field">
+                <label>Datum:</label>
+                <span>${data["Datum"]}</span>
+            </div>
+            <div class="field">
+                <label>Gäste:</label>
+                <span>${data.Guests.length}</span>
+            </div>
+            <table class="guest-list">
+               ${guestRows}
+            </table>
+            `;
+                // <button type="button">Route anzeigen</button>
+            }
+        </script>
+
+    </div>
+</body>
+
+</html>
